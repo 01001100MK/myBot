@@ -1,0 +1,22 @@
+{
+  "name": "myBot",
+  "description": "My Facebook Messenger Bot",
+  "version": "1.0.0",
+  "author": "Nay",
+  "license": "Private",
+  "main": "server.js",
+
+  "dependencies": {
+    "express": "latest",
+    "body-parser": "latest",
+    "superagent": "latest"
+  },
+
+  "scripts": {
+    "start": "node server.js"
+  },
+  
+  "engines": {
+    "node": "latest"
+  }
+}
