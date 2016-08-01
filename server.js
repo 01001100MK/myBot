@@ -44,11 +44,10 @@ app.post('/webhook', function(req, res) {
         // PAYLOAD: Data from structured page
         if (event.postback) {
             payload = JSON.stringify(event.postback.payload).trim().substring(0, 60);
-            console.log('Payload: ' + payload);
+            console.log('Payload: ' + payload.substring(0, 5).toLowerCase());
             if (payload.substring(0, 4).toLowerCase() === 'help') {
                 sendTextMessage(sender, 'Show help menu');
-            }
-            else if (payload.substring(0, 5).toLowerCase() === 'about') {
+            } else if (payload.substring(0, 5).toLowerCase() === 'about') {
                 console.log('about');
                 sendTextMessage(sender, 'This is myBot written for MEAN Workshop');
             }
