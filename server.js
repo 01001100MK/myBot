@@ -43,7 +43,8 @@ app.post('/webhook', function(req, res) {
 
         // PAYLOAD: Data from structured page
         if (event.postback) {
-            payload = JSON.stringify(event.postback.payload).trim().substring(0, 60);
+            // Start extract string from index one to skip quote (") character
+            payload = JSON.stringify(event.postback.payload).trim().substring(1, 60); 
             console.log('Payload: ' + payload.substring(0, 5).toLowerCase());
             if (payload.substring(0, 4).toLowerCase() === 'help') {
                 sendTextMessage(sender, 'Show help menu');
