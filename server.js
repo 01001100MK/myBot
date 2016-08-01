@@ -49,7 +49,7 @@ app.post('/webhook', function(req, res) {
                 sendTextMessage(sender, 'Show help menu');
             }
             else if (payload.substring(0, 4).toLowerCase() === 'about') {
-                sendTextMessage(sender, 'This is myBot');
+                sendTextMessage(sender, 'This is myBot written for MEAN Workshop');
             }
         }
 
@@ -69,9 +69,9 @@ app.post('/webhook', function(req, res) {
 });
 
 // To send plain text messages
-function sendTextMessage(sender, text) {
+function sendTextMessage(sender, textMsg) {
    sendMessage(sender, {
-         text: text
+         text: textMsg
    });
 }
 
