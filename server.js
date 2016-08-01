@@ -36,12 +36,12 @@ app.post('/webhook', function(req, res) {
     var sender = messagingEvents[0].sender.id;
     console.log('SenderID: ' + sender);
 
-    // Start processing incoming messages
+    // Processing incoming messages
     messagingEvents.forEach(function(event) {
         var payload = '';
         var text = '';
 
-        // Return from structured page
+        // PAYLOAD: Data from structured page
         if (event.postback) {
             payload = JSON.stringify(event.postback.payload).trim().substring(0, 60);
             console.log('Payload: ' + payload);
@@ -49,11 +49,12 @@ app.post('/webhook', function(req, res) {
                 sendTextMessage(sender, 'Show help menu');
             }
             else if (payload.substring(0, 5).toLowerCase() === 'about') {
+                console.log('about');
                 sendTextMessage(sender, 'This is myBot written for MEAN Workshop');
             }
         }
 
-        // Branch into separate functions
+        // MESSAGE: Data from user text input
         if ((event.message && event.message.text) && !payload) {
             text = event.message.text.trim();
             console.log('Text: ' + text);
