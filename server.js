@@ -1,6 +1,6 @@
 'use strict';
 // myBot
-// Version 1.0.0
+// Version 1.0.1
 
 var express = require('express');
 var request = require('superagent');
