@@ -45,11 +45,10 @@ app.post('/webhook', function(req, res) {
         if (event.postback) {
             // Start extract string from index one to skip quote (") character
             payload = JSON.stringify(event.postback.payload).trim().substring(1, 60); 
-            console.log('Payload: ' + payload.substring(0, 5).toLowerCase());
+            console.log('Payload: ' + payload);
             if (payload.substring(0, 4).toLowerCase() === 'help') {
                 sendTextMessage(sender, 'Show help menu');
             } else if (payload.substring(0, 5).toLowerCase() === 'about') {
-                console.log('about');
                 sendTextMessage(sender, 'This is myBot written for MEAN Workshop');
             }
         }
