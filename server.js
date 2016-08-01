@@ -48,7 +48,7 @@ app.post('/webhook', function(req, res) {
             if (payload.substring(0, 4).toLowerCase() === 'help') {
                 sendTextMessage(sender, 'Show help menu');
             }
-            else if (payload.substring(0, 4).toLowerCase() === 'about') {
+            else if (payload.substring(0, 5).toLowerCase() === 'about') {
                 sendTextMessage(sender, 'This is myBot written for MEAN Workshop');
             }
         }
