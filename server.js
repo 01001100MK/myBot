@@ -64,8 +64,13 @@ app.post('/webhook', function(req, res) {
 
             if (text.substring(0, 4).toLowerCase() === 'help' || text.substring(0, 4).toLowerCase() === 'menu') {
                 showMenu(sender, 'Help menu');
+            } else if (text.substring(0, 4).toLowerCase() === 'add '){
+                var bear_name = text.substring(4, 20);
+                if (bear_name) createBear({name: bear_name}, function(){
+                    sendTextMessage(sender, 'Bear Created');
+                });
             } else {
-                sendTextMessage(sender, 'This is myBot, type MENU for help');
+                sendTextMessage(sender, 'This is myBot, type MENU for help, ADD xxx to add');
             }
         }
     });
