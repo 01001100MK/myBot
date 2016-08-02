@@ -66,8 +66,8 @@ app.post('/webhook', function(req, res) {
                 showMenu(sender, 'Help menu');
             } else if (text.substring(0, 4).toLowerCase() === 'add '){
                 var bear_name = text.substring(4, 20);
-                if (bear_name) createBear({name: bear_name}, function(){
-                    sendTextMessage(sender, 'Bear Created');
+                if (bear_name) createBear({name: bear_name}, function(err){
+                    if (!err) sendTextMessage(sender, 'Bear Created');
                 });
             } else {
                 sendTextMessage(sender, 'This is myBot, type MENU for help, ADD xxx to add');
@@ -169,11 +169,7 @@ function createBear(obj, callback){
     var bear = new Bear();		// create a new instance of the Bear model
     bear.name = obj.name;       
     bear.save(function(err) {
-        if (err) {
-            console.log(err);
-        } else {
-            callback(true);
-        }
+        callback(err);
     });
 }
 
