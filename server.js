@@ -174,7 +174,7 @@ function createBear(obj, callback){
 
 // Get All Bears
 function getBears(callback){
-    Bear.find().toArray(function(err, results) {
+    Bear.find({}).toArray(function(err, results) {
         if (err) {
             console.log(err);
         } else {
@@ -184,3 +184,9 @@ function getBears(callback){
     });
 }
 
+// We used .toArray() chained to find because running find alone 
+// returns a db cursor. We then would have to iterate over the cursor and 
+// fetch results. The reason for this is that for performance reasons, 
+// mongodb does not fetch the full record data by default. 
+// Using .toArray() tells the driver that we want full data of each user, 
+// which is then returned.
