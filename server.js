@@ -50,7 +50,7 @@ app.post('/webhook', function(req, res) {
 
             if (payload.substring(0, 12).toLowerCase() === 'showallbears') {
                 getBears(function(bears){
-                    sendTextMessage(sender, bears);
+                    if (bears) sendTextMessage(sender, bears);
                 });
             } else if (payload.substring(0, 5).toLowerCase() === 'about') {
                 sendTextMessage(sender, 'This is myBot written for MEAN Workshop');
@@ -178,8 +178,8 @@ function getBears(callback){
         if (err) {
             console.log(err);
         } else {
-            console.log(bears);
-            callback(bears.name);
+            console.log(bears[0].name);
+            callback(bears[0].name);
         }
     });
 }
