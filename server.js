@@ -179,7 +179,7 @@ function getBears(callback){
         if (err) {
             console.log(err);
         } else {
-            console.log(JSON.stringify(bears.name));
+            console.log(bears);
             callback(JSON.stringify(bears.name));
         }
     });
