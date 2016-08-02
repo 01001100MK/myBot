@@ -178,8 +178,8 @@ function getBears(callback){
         if (err) {
             console.log(err);
         } else {
-            console.log(results.toArray());
-            callback(results.toArray().name);
+            console.log(results);
+            callback(results);
         }
     });
 }
