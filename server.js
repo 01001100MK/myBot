@@ -174,13 +174,16 @@ function createBear(obj, callback){
 
 // Get All Bears
 function getBears(callback){
-    Bear.find({}).exec(function(err, results) {
+    Bear.find({}).exec(function(err, bears) {
         if (err) {
             console.log(err);
         } else {
-            results = JSON.stringify(results, undefined, 2)
-            console.log(results);
-            callback(results);
+            var result = '';
+            bears.forEach(function(bear){
+                result += bear.name + ",";
+            });
+            console.log(result);
+            callback(result);
         }
     });
 }
