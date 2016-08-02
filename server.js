@@ -50,7 +50,7 @@ app.post('/webhook', function(req, res) {
 
             if (payload.substring(0, 12).toLowerCase() === 'showallbears') {
                 getBears(function(bears){
-                    console.log(JSON.stringify(bears));
+                    console.log(bears);
                     sendTextMessage(sender, bears);
                 });
             } else if (payload.substring(0, 5).toLowerCase() === 'about') {
@@ -179,6 +179,7 @@ function getBears(callback){
         if (err) {
             console.log(err);
         } else {
+            console.log(JSON.stringify(bears.name));
             callback(JSON.stringify(bears.name));
         }
     });
