@@ -174,7 +174,7 @@ function createBear(obj, callback){
 
 // Get All Bears
 function getBears(callback){
-    Bear.find({}).toArray(function(err, results) {
+    Bear.find({}).exec(function(err, results) {
         if (err) {
             console.log(err);
         } else {
