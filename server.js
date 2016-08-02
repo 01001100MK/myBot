@@ -178,6 +178,7 @@ function getBears(callback){
         if (err) {
             console.log(err);
         } else {
+            results = JSON.stringify(results, undefined, 2)
             console.log(results);
             callback(results);
         }
