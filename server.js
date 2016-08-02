@@ -1,6 +1,8 @@
 'use strict';
-// myBot
-// Version 1.0.1
+// ------------------
+//   myBot
+//   version 1.0.2
+// ------------------
 
 var express = require('express');
 var request = require('superagent');
@@ -45,8 +47,12 @@ app.post('/webhook', function(req, res) {
             // Start extract string from index one to skip quote (") character
             payload = JSON.stringify(event.postback.payload).trim().substring(1, 60); 
             console.log('Payload: ' + payload);
-            if (payload.substring(0, 4).toLowerCase() === 'help') {
-                sendTextMessage(sender, 'Show help menu');
+
+            if (payload.substring(0, 4).toLowerCase() === 'showallbears') {
+                getBears(function(bears){
+                    console.log(bears);
+                    sendTextMessage(sender, bears);
+                });
             } else if (payload.substring(0, 5).toLowerCase() === 'about') {
                 sendTextMessage(sender, 'This is myBot written for MEAN Workshop');
             }
@@ -87,8 +93,8 @@ function showMenu(sender, messageDetails) {
                     image_url: 'http://i446.photobucket.com/albums/qq190/naytunthein/iLedger_red_zps6opcv9lt.png',
                     buttons: [{
                         type: 'postback',
-                        title: 'Help',
-                        payload: 'help'
+                        title: 'Show All Bears',
+                        payload: 'showallbears'
                     }, {
                         type: 'postback',
                         title: 'About',
@@ -154,20 +160,27 @@ var Bear     	= require('./app/models/bear');
 // Connect to MongoDB using Mongoose driver
 mongoose.connect('mongodb://naytunAdmin:Password99@ds023654.mlab.com:23654/mean'); 
 
-function createBear(obj){		
+// Create a New Bear
+function createBear(obj, callback){		
     var bear = new Bear();		// create a new instance of the Bear model
-    bear.name = obj.name;       // set the bears name 
-
+    bear.name = obj.name;       
     bear.save(function(err) {
-        if (err) console.log(err);
-        return true;
+        if (err) {
+            console.log(err);
+        } else {
+            callback(true);
+        }
     });
 }
 
-function getBear(){
+// Get All Bears
+function getBears(callback){
     Bear.find(function(err, bears) {
-        if (err) console.log(err);
-        return bears;
+        if (err) {
+            console.log(err);
+        } else {
+            callback(bears);
+        }
     });
 }
 
