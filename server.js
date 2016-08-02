@@ -48,7 +48,7 @@ app.post('/webhook', function(req, res) {
             payload = JSON.stringify(event.postback.payload).trim().substring(1, 60); 
             console.log('Payload: ' + payload);
 
-            if (payload.substring(0, 4).toLowerCase() === 'showallbears') {
+            if (payload.substring(0, 12).toLowerCase() === 'showallbears') {
                 getBears(function(bears){
                     console.log(bears);
                     sendTextMessage(sender, bears);
