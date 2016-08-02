@@ -12,6 +12,10 @@ var port = process.env.PORT || 8080;
 var pageToken = 'EAAZARCeCmajcBALOsTO4mOPAcruNQQZAzRNR9xE8cNOqe0pHe6qn5kkpLfhbXCIEkiiJ7XY71JpyhZABvoqlPdxkw9qX5qHA2OlXmDAZBk2CfvW6OpEtxX3pZAQ887c83DpdoZCy6QBVYBziEdZARYyvjSjfSLFeY8oqIao3dBYPQZDZD';
 var verifyToken = 'my_secret_token';
 
+// configure body parser
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 // --------------------- Setting up Webhook -----------------------------
 app.get('/webhook', function(req, res) {
     if (req.query['hub.verify_token'] === verifyToken) {
@@ -25,12 +29,7 @@ app.get('/', function(req, res) {
     res.send('Success! This is Bot for Facebook Messenger.');
 });
 
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-app.use(bodyParser.json());
-
-// --------- Initiate Messenger Bot ---------
+// --- Initiate Messenger Bot 
 app.post('/webhook', function(req, res) {
     var messagingEvents = req.body.entry[0].messaging;
     var sender = messagingEvents[0].sender.id;
@@ -68,14 +67,14 @@ app.post('/webhook', function(req, res) {
     res.sendStatus(200);
 });
 
-// To send plain text messages
+//--- To send plain text messages
 function sendTextMessage(sender, textMsg) {
    sendMessage(sender, {
          text: textMsg
    });
 }
 
-// To send message bubbles (structured messages)
+//--- To send message bubbles (structured messages)
 function showMenu(sender, messageDetails) {
     sendMessage(sender, {
         attachment: {
@@ -101,7 +100,7 @@ function showMenu(sender, messageDetails) {
     });
 }
 
-// Generic function to send messages
+//--- Generic function to send messages
 function sendMessage(sender, message) {
     request
         .post('https://graph.facebook.com/v2.6/me/messages')
@@ -124,7 +123,7 @@ function sendMessage(sender, message) {
         });
 }
 
-//----- Token
+//--- Token
 // update and check page token for an existing app
 app.post('/token', function(req, res) {
     if (req.body.verifyToken === verifyToken) {
@@ -137,14 +136,38 @@ app.post('/token', function(req, res) {
 app.get('/token', function(req, res) {
     if (req.body.verifyToken === verifyToken) {
         console.log(verifyToken);
-        return res.send({
-            token: pageToken
-        });
+        return res.send({ token: pageToken });
     }
     console.log('error in token');
     res.sendStatus(403);
 });
 
+//--- Server start listening
 app.listen(port);
 console.log('\n========= myBot listening on port ' + port + ' =========\n');
+
+
+// --------------------- Setting up Database -----------------------------
+var mongoose   	= require('mongoose');
+var Bear     	= require('./app/models/bear');
+
+// Connect to MongoDB using Mongoose driver
+mongoose.connect('mongodb://naytunAdmin:Password99@ds023654.mlab.com:23654/mean'); 
+
+function createBear(obj){		
+    var bear = new Bear();		// create a new instance of the Bear model
+    bear.name = obj.name;       // set the bears name 
+
+    bear.save(function(err) {
+        if (err) console.log(err);
+        return true;
+    });
+}
+
+function getBear(){
+    Bear.find(function(err, bears) {
+        if (err) console.log(err);
+        return bears;
+    });
+}
 
