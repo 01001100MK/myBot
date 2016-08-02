@@ -179,6 +179,7 @@ function getBears(callback){
             console.log(err);
         } else {
             var result = '';
+            // Extract each row from json object
             bears.forEach(function(bear){
                 result += bear.name + "\n";
             });
