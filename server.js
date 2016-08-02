@@ -67,7 +67,7 @@ app.post('/webhook', function(req, res) {
             } else if (text.substring(0, 4).toLowerCase() === 'add '){
                 var bear_name = text.substring(4, 20);
                 if (bear_name) createBear({name: bear_name}, function(err){
-                    if (!err) sendTextMessage(sender, 'Bear Created');
+                    if (!err) sendTextMessage(sender, 'Bear Added!');
                 });
             } else {
                 sendTextMessage(sender, 'This is myBot, type MENU for help, ADD xxx to add');
