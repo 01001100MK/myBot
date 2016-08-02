@@ -70,7 +70,7 @@ app.post('/webhook', function(req, res) {
                     if (!err) sendTextMessage(sender, 'Bear Added!');
                 });
             } else {
-                sendTextMessage(sender, 'This is myBot, type MENU for help, ADD xxx to add');
+                sendTextMessage(sender, 'This is myBot, type MENU for help, ADD <name> to add');
             }
         }
     });
