@@ -223,9 +223,9 @@ function getNews(sender){
 
                 // Loop News Articles
                 for (var i = news.length - 1; i >= 0; i--) {
-                    newsDetail += news[i].articles.title + '\n';
+                    newsDetail += news[i].title + '\n';
                 }
-                console.log(news);
+                console.log(news.title);
                 console.log(newsDetail);
                 sendTextMessage(sender, newsDetail);
             }
