@@ -209,7 +209,7 @@ app.get('/weather', function(req, res) {
 // --------------------- Setting up DAILY NEWS -----------------------------
 function getNews(sender){
     request
-        .get('https://newsapi.org/v1/articles?source=techcrunch&apiKey=3e22f2fcc1344975ae2b2e69379e2a6e' + token)
+        .get('http://newsapi.org/v1/articles?source=techcrunch&apiKey=3e22f2fcc1344975ae2b2e69379e2a6e')
         .set('Content-Type', 'application/json')
         .accept('application/json')
         .end(function(err, res) {
