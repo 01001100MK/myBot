@@ -221,7 +221,7 @@ function getNews(sender){
 
                 // Loop News Articles
                 for (var i = 0; i < news.length ; i ++) {
-                    newsDetail += i+1 + '. ' + news[i].title.substring(0, 25) + '...\n';
+                    newsDetail += i+1 + '. ' + news[i].title.substring(0, 20) + '..\n';
                 }
                 sendTextMessage(sender, newsDetail);
             }
@@ -255,17 +255,16 @@ function getCountryInfo(sender){
             if (err) {
                 console.log('* Error * ');
             } else {
-                var info = res.body;
-                console.log(res.text);
+                var info = res.text;
                 // console.log(info);
-                // var fullname = 'Name: ' + info.names.full + '\n';
-                // var language = 'Language: ' + info.language[0].language + '\n';
-                // var electricity = 'Electricity: ' + info.electricity.voltage + '\n';
-                // var telephone = 'Ph. Code: ' + info.telephone.calling_code + '\n';
-                // var police = 'Police: ' + info.telephone.police + '\n';
-                // var advise = 'Advice: ' + info.advise.UA.advise + '\n';
+                var fullname = 'Name: ' + info.names.full + '\n';
+                var language = 'Language: ' + info.language[0].language + '\n';
+                var electricity = 'Electricity: ' + info.electricity.voltage + '\n';
+                var telephone = 'Ph. Code: ' + info.telephone.calling_code + '\n';
+                var police = 'Police: ' + info.telephone.police + '\n';
+                var advise = 'Advice: ' + info.advise.UA.advise + '\n';
 
-                // sendTextMessage(sender, 'MYANMAR:\n' + fullname + language + electricity + telephone + police + advise);
+                sendTextMessage(sender, 'MYANMAR:\n' + fullname + language + electricity + telephone + police + advise);
             }
         });
 }
