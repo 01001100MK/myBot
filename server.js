@@ -17,6 +17,8 @@ var verifyToken = 'my_secret_token';
 // configure body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
 // --------------------- Setting up Webhook -----------------------------
 app.get('/webhook', function(req, res) {
