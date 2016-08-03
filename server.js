@@ -219,7 +219,7 @@ function getNews(sender){
                 console.log('* Error * ');
             } else {
                 var newsDetail = '';
-                var news = res.body.articles[0];
+                var news = res.body.articles;
 
                 // Loop News Articles
                 for (var i = news.length - 1; i >= 0; i--) {
@@ -227,7 +227,7 @@ function getNews(sender){
                 }
                 console.log(news);
                 console.log(newsDetail);
-                // sendTextMessage(sender, newsDetail);
+                sendTextMessage(sender, newsDetail);
             }
         });
 }
