@@ -223,7 +223,7 @@ function getNews(sender){
 
                 // Loop News Articles
                 for (var i = news.length - 1; i >= 0; i--) {
-                    newsDetail += news[i].articles.description + '\n';
+                    newsDetail += news[i].articles.title + '\n';
                 }
                 console.log(news);
                 console.log(newsDetail);
