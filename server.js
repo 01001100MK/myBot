@@ -256,7 +256,8 @@ function getCountryInfo(sender){
                 console.log('* Error * ');
             } else {
                 var info = res.body;
-                console.log(res);
+                // console.log(res);
+                console.log(info);
 
                 var fullname = 'Name: ' + info.names.full + '\n';
                 var language = 'Language: ' + info.language[0].language + '\n';
