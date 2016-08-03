@@ -218,14 +218,15 @@ function getNews(sender){
             if (err) {
                 console.log('* Error * ');
             } else {
-                var messageDetail = '';
+                var newsDetail = '';
                 var news = res.body;
 
                 // Loop News Articles
                 for (var i = news.length - 1; i >= 0; i--) {
-                    messageDetail += news[i].articles.description;
+                    newsDetail += news[i].articles.description + '\n';
                 }
-                sendTextMessage(sender, messageDetail);
+                console.log(newsDetail)
+                // sendTextMessage(sender, newsDetail);
             }
         });
 }
@@ -242,11 +243,9 @@ function getExRate(sender){
             } else {
                 var exgRate = '';
                 var currencies = res.body;
-                console.log(currencies);
 
                 exgRate = currencies.rates.MMK;
-                exgRate = 1 / exgRate;
-                sendTextMessage(sender, exgRate.toString());
+                sendTextMessage(sender, 'Latest (USD) Rate: ' + exgRate.toString());
             }
         });
 }
