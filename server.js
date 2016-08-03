@@ -14,7 +14,6 @@ var app = express();
 var port = process.env.PORT || 8080;
 var pageToken = 'EAAZARCeCmajcBALOsTO4mOPAcruNQQZAzRNR9xE8cNOqe0pHe6qn5kkpLfhbXCIEkiiJ7XY71JpyhZABvoqlPdxkw9qX5qHA2OlXmDAZBk2CfvW6OpEtxX3pZAQ887c83DpdoZCy6QBVYBziEdZARYyvjSjfSLFeY8oqIao3dBYPQZDZD';
 var verifyToken = 'my_secret_token';
-var senderId = '';
 
 // configure body parser
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -40,7 +39,6 @@ app.get('/', function(req, res) {
 app.post('/webhook', function(req, res) {
     var messagingEvents = req.body.entry[0].messaging;
     var sender = messagingEvents[0].sender.id;
-    senderId = sender;
     console.log('SenderID: ' + sender);
 
     // Processing incoming messages
@@ -58,6 +56,8 @@ app.post('/webhook', function(req, res) {
                 getBears(function(bears){
                     if (bears) sendTextMessage(sender, bears);
                 });
+            } else if (payload.substring(0, 8).toLowerCase() === 'shownews') {
+                getNews(sender);
             } else if (payload.substring(0, 5).toLowerCase() === 'about') {
                 sendTextMessage(sender, 'This is myBot written for MEAN Workshop');
             }
@@ -105,6 +105,10 @@ function showMenu(sender, messageDetails) {
                         type: 'postback',
                         title: 'Show All Bears',
                         payload: 'showallbears'
+                    }, {
+                        type: 'postback',
+                        title: 'Show News',
+                        payload: 'shownews'
                     }, {
                         type: 'web_url',
                         title: 'Show Weather',
@@ -202,8 +206,8 @@ app.get('/weather', function(req, res) {
     res.render(path.join(__dirname + '/app/index.html'));
 });
 
-//
-app.get('/news', function(req, res) {
+// --------------------- Setting up DAILY NEWS -----------------------------
+function getNews(sender){
     request
         .get('https://newsapi.org/v1/articles?source=techcrunch&apiKey=3e22f2fcc1344975ae2b2e69379e2a6e' + token)
         .set('Content-Type', 'application/json')
@@ -219,8 +223,8 @@ app.get('/news', function(req, res) {
                 for (var i = news.length - 1; i >= 0; i--) {
                     messageDetail += news[i].articles.description;
                 }
-                sendTextMessage(senderId, messageDetail);
+                sendTextMessage(sender, messageDetail);
             }
         });
     res.sendStatus(200);
-});
+}
