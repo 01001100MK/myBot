@@ -52,10 +52,8 @@ app.post('/webhook', function(req, res) {
             payload = JSON.stringify(event.postback.payload).trim().substring(1, 60); 
             console.log('Payload: ' + payload);
 
-            if (payload.substring(0, 12).toLowerCase() === 'showallbears') {
-                getBears(function(bears){
-                    if (bears) sendTextMessage(sender, bears);
-                });
+            if (payload.substring(0, 15).toLowerCase() === 'showcountryinfo') {
+                getCountryInfo(sender);
             } else if (payload.substring(0, 8).toLowerCase() === 'shownews') {
                 getNews(sender);
             } else if (payload.substring(0, 10).toLowerCase() === 'showexrate') {
@@ -105,8 +103,8 @@ function showMenu(sender, messageDetails) {
                     image_url: 'http://i446.photobucket.com/albums/qq190/naytunthein/iLedger_red_zps6opcv9lt.png',
                     buttons: [{
                         type: 'postback',
-                        title: 'Show All Bears',
-                        payload: 'showallbears'
+                        title: 'Country Info.',
+                        payload: 'showcountryinfo'
                     }, {
                         type: 'postback',
                         title: 'Show News',
@@ -230,7 +228,6 @@ function getNews(sender){
         });
 }
 
-
 function getExRate(sender){
     request
         .get('http://openexchangerates.org/api/latest.json?app_id=440b42f70b964695a9d820bb96398caa')
@@ -245,6 +242,29 @@ function getExRate(sender){
 
                 exgRate = currencies.rates.MMK;
                 sendTextMessage(sender, '(USD) Rate: ' + exgRate.toString());
+            }
+        });
+}
+
+function getCountryInfo(sender){
+    request
+        .get('http://travelbriefing.org/Myanmar?format=json')
+        .set('Content-Type', 'application/json')
+        .accept('application/json')
+        .end(function(err, res) {
+            if (err) {
+                console.log('* Error * ');
+            } else {
+                console.log(res.body);
+
+                var fullname = 'Name: ' + res.body.names.full + '\n';
+                var language = 'Language: ' + res.body.language.language + '\n';
+                var electricity = 'Electricity: ' + electricity.voltage + '\n';
+                var telephone = 'Ph. Code: ' + telephone.calling_code + '\n';
+                var police = 'Police: ' + telephone.police + '\n';
+                var advise = 'Advice: ' + advise.UA.advise + '\n';
+
+                sendTextMessage(sender, 'MYANMAR:\n' + fullname + language + electricity + telephone + police + advise);
             }
         });
 }
