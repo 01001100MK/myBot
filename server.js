@@ -225,7 +225,6 @@ function getNews(sender){
                 for (var i = news.length - 1; i >= 0; i--) {
                     newsDetail += news[i].title + '\n';
                 }
-                console.log(news.title);
                 console.log(newsDetail);
                 sendTextMessage(sender, newsDetail);
             }
