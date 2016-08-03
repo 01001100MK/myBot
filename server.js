@@ -7,6 +7,7 @@
 var express = require('express');
 var request = require('superagent');
 var bodyParser = require('body-parser');
+var path = require('path');
 
 // Global Variables
 var app = express();
@@ -17,6 +18,7 @@ var verifyToken = 'my_secret_token';
 // configure body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(express.static(__dirname));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
@@ -194,6 +196,5 @@ function getBears(callback){
 
 
 app.get('/weather', function(req, res) {
-    res.render('./app/index.html');
-    // res.render(path.join(__dirname + '/app/index.html'));
+    res.render(path.join(__dirname + '/app/index.html'));
 });
