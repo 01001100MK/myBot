@@ -105,8 +105,8 @@ function showMenu(sender, messageDetails) {
                         payload: 'showallbears'
                     }, {
                         type: 'web_url',
-                        title: 'Wind Weather',
-                        url: 'https://mybot12345.herokuapp.com/weather/'
+                        title: 'Show Weather',
+                        url: 'https://mybot12345.herokuapp.com/weather'
                     }]
                 }]
             }
@@ -194,6 +194,7 @@ function getBears(callback){
     });
 }
 
+// --------------------- Setting up Web View -----------------------------
 
 app.get('/weather', function(req, res) {
     res.render(path.join(__dirname + '/app/index.html'));
