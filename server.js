@@ -249,8 +249,8 @@ function getExRate(sender){
 function getCountryInfo(sender){
     request
         .get('http://travelbriefing.org/Myanmar?format=json')
-        .set('Content-Type', 'application/json')
-        .accept('application/json')
+        // .set('Content-Type', 'application/json')
+        // .accept('application/json')
         .end(function(err, res) {
             if (err) {
                 console.log('* Error * ');
