@@ -102,7 +102,7 @@ function showMenu(sender, messageDetails) {
                     }, {
                         type: 'web_url',
                         title: 'Wind Weather',
-                        url: 'https://mybot12345.heroku.com/weather/'
+                        url: 'https://mybot12345.herokuapp.com/weather/'
                     }]
                 }]
             }
