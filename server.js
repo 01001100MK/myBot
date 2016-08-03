@@ -219,7 +219,7 @@ function getNews(sender){
                 console.log('* Error * ');
             } else {
                 var messageDetail = '';
-                var invoices = res.body;
+                var news = res.body;
 
                 // Loop News Articles
                 for (var i = news.length - 1; i >= 0; i--) {
