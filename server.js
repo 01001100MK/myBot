@@ -211,14 +211,14 @@ app.get('/weather', function(req, res) {
 // --------------------- Setting up DAILY NEWS -----------------------------
 function getNews(sender){
     request
-        .get('http://newsapi.org/v1/articles?source=techcrunch&apiKey=3e22f2fcc1344975ae2b2e69379e2a6e')
+        .get('http://newsapi.org/v1/articles?source=cnn&apiKey=3e22f2fcc1344975ae2b2e69379e2a6e')
         .set('Content-Type', 'application/json')
         .accept('application/json')
         .end(function(err, res) {
             if (err) {
                 console.log('* Error * ');
             } else {
-                var newsDetail = '';
+                var newsDetail = 'CNN:\n';
                 var news = res.body.articles;
 
                 // Loop News Articles
