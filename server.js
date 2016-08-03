@@ -100,9 +100,9 @@ function showMenu(sender, messageDetails) {
                         title: 'Show All Bears',
                         payload: 'showallbears'
                     }, {
-                        type: 'postback',
-                        title: 'About',
-                        payload: 'about'
+                        type: 'web_url',
+                        title: 'Wind Weather',
+                        url: 'https://mybot12345.heroku.com/weather/'
                     }]
                 }]
             }
@@ -189,3 +189,9 @@ function getBears(callback){
         }
     });
 }
+
+
+app.get('/weather', function(req, res) {
+    res.render('./app/index.html');
+    // res.render(path.join(__dirname + '/app/index.html'));
+});
