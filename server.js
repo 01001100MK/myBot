@@ -221,7 +221,7 @@ function getNews(sender){
 
                 // Loop News Articles
                 for (var i = 0; i < news.length ; i ++) {
-                    newsDetail += i+1 + '. ' + news[i].title.substring(0, 30) + '...\n';
+                    newsDetail += i+1 + '. ' + news[i].title.substring(0, 25) + '...\n';
                 }
                 sendTextMessage(sender, newsDetail);
             }
@@ -256,7 +256,7 @@ function getCountryInfo(sender){
                 console.log('* Error * ');
             } else {
                 var info = res.body;
-                console.log(res);
+                console.log(res.text);
                 // console.log(info);
                 // var fullname = 'Name: ' + info.names.full + '\n';
                 // var language = 'Language: ' + info.language[0].language + '\n';
