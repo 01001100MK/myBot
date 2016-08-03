@@ -58,6 +58,8 @@ app.post('/webhook', function(req, res) {
                 });
             } else if (payload.substring(0, 8).toLowerCase() === 'shownews') {
                 getNews(sender);
+            } else if (payload.substring(0, 10).toLowerCase() === 'showexrate') {
+                getExRate(sender);
             } else if (payload.substring(0, 5).toLowerCase() === 'about') {
                 sendTextMessage(sender, 'This is myBot written for MEAN Workshop');
             }
@@ -110,9 +112,9 @@ function showMenu(sender, messageDetails) {
                         title: 'Show News',
                         payload: 'shownews'
                     }, {
-                        type: 'web_url',
-                        title: 'Show Weather',
-                        url: 'https://mybot12345.herokuapp.com/weather'
+                        type: 'postback',
+                        title: 'Show Exchange Rate',
+                        payload: 'showexrate'
                     }]
                 }]
             }
@@ -224,6 +226,27 @@ function getNews(sender){
                     messageDetail += news[i].articles.description;
                 }
                 sendTextMessage(sender, messageDetail);
+            }
+        });
+}
+
+
+function getExRate(sender){
+    request
+        .get('http://openexchangerates.org/api/latest.json?app_id=440b42f70b964695a9d820bb96398caa')
+        .set('Content-Type', 'application/json')
+        .accept('application/json')
+        .end(function(err, res) {
+            if (err) {
+                console.log('* Error * ');
+            } else {
+                var exgRate = '';
+                var currencies = res.body;
+                console.log(currencies);
+
+                exgRate = currencies.rates.MMK;
+                exgRate = 1 / exgRate;
+                sendTextMessage(sender, exgRate.toString());
             }
         });
 }
