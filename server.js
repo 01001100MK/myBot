@@ -255,16 +255,16 @@ function getCountryInfo(sender){
             if (err) {
                 console.log('* Error * ');
             } else {
-                var info = res.text;
+                var info = JSON.parse(res.text);
                 console.log(info);
-                // var fullname = 'Name: ' + info.names.full + '\n';
+                var fullname = 'Name: ' + info.names.full + '\n';
                 var language = 'Language: ' + info.language[0].language + '\n';
                 var electricity = 'Electricity: ' + info.electricity.voltage + '\n';
-                // var telephone = 'Ph. Code: ' + info.telephone.calling_code + '\n';
-                // var police = 'Police: ' + info.telephone.police + '\n';
-                // var advise = 'Advice: ' + info.advise.UA.advise + '\n';
+                var telephone = 'Ph. Code: ' + info.telephone.calling_code + '\n';
+                var police = 'Police: ' + info.telephone.police + '\n';
+                var advise = 'Advice: ' + info.advise.UA.advise + '\n';
 
-                // sendTextMessage(sender, 'MYANMAR:\n' + fullname + language + electricity + telephone + police + advise);
+                sendTextMessage(sender, 'MYANMAR:\n' + fullname + language + electricity + telephone + police + advise);
             }
         });
 }
