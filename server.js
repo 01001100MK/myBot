@@ -262,9 +262,10 @@ function getCountryInfo(sender){
                 var electricity = 'Electricity: ' + info.electricity.voltage + 'V AC\n';
                 var telephone = 'Intl. Ph. Prefix: ' + info.telephone.calling_code + '\n';
                 var police = 'Police Ph: ' + info.telephone.police + '\n\n';
-                var advise = 'ADVICE:\n' + info.advise.UA.advise + '\n';
+                var advise = 'Advice:\n' + info.advise.UA.advise + '!\n';
 
-                sendTextMessage(sender, fullname + language + electricity + telephone + police + advise);
+                sendTextMessage(sender, fullname + language + electricity + telephone + police);
+                sendTextMessage(sender, advise);
             }
         });
 }
