@@ -225,7 +225,8 @@ function getNews(sender){
                 for (var i = news.length - 1; i >= 0; i--) {
                     newsDetail += news[i].articles.description + '\n';
                 }
-                console.log(newsDetail)
+                console.log(news);
+                console.log(newsDetail);
                 // sendTextMessage(sender, newsDetail);
             }
         });
@@ -245,7 +246,7 @@ function getExRate(sender){
                 var currencies = res.body;
 
                 exgRate = currencies.rates.MMK;
-                sendTextMessage(sender, 'Latest (USD) Rate: ' + exgRate.toString());
+                sendTextMessage(sender, '(USD) Rate: ' + exgRate.toString());
             }
         });
 }
