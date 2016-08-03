@@ -241,7 +241,7 @@ function getExRate(sender){
                 var currencies = res.body;
 
                 exgRate = currencies.rates.MMK;
-                sendTextMessage(sender, '(USD) Rate: ' + exgRate.toString());
+                sendTextMessage(sender, 'USD vs. MMK: ' + exgRate.toString());
             }
         });
 }
