@@ -222,8 +222,8 @@ function getNews(sender){
                 var news = res.body.articles;
 
                 // Loop News Articles
-                for (var i = news.length - 1; i >= 0; i--) {
-                    newsDetail += '> ' + news[i].title.substrin(0,20) + '...\n';
+                for (var i = 0; i < news.length ; i ++) {
+                    newsDetail += '> ' + news[i].title.substring(0, 20) + '...\n';
                 }
                 console.log(newsDetail);
                 sendTextMessage(sender, newsDetail);
