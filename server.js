@@ -226,5 +226,4 @@ function getNews(sender){
                 sendTextMessage(sender, messageDetail);
             }
         });
-    res.sendStatus(200);
 }
