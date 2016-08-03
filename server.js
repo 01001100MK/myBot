@@ -220,8 +220,8 @@ function getNews(sender){
                 var news = res.body.articles;
 
                 // Loop News Articles
-                for (var i = 0; i < news.length ; i ++) {
-                    newsDetail += i+1 + '. ' + news[i].title.substring(0, 20) + '..\n';
+                for (var i = 1; i < news.length ; i ++) {
+                    newsDetail += i + '. ' + news[i].title.substring(0, 20) + '..\n';
                 }
                 sendTextMessage(sender, newsDetail);
             }
