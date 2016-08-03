@@ -223,7 +223,7 @@ function getNews(sender){
 
                 // Loop News Articles
                 for (var i = news.length - 1; i >= 0; i--) {
-                    newsDetail += news[i].title + '\n';
+                    newsDetail += '> ' + news[i].title.substrin(0,20) + '...\n';
                 }
                 console.log(newsDetail);
                 sendTextMessage(sender, newsDetail);
