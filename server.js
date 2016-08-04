@@ -52,11 +52,7 @@ app.post('/webhook', function(req, res) {
             payload = JSON.stringify(event.postback.payload).trim().substring(1, 60); 
             console.log('Payload: ' + payload);
 
-            if (payload.substring(0, 15).toLowerCase() === 'showcountryinfo') {
-                getCountryInfo(sender);
-            } else if (payload.substring(0, 8).toLowerCase() === 'shownews') {
-                getNews(sender);
-            } else if (payload.substring(0, 10).toLowerCase() === 'showexrate') {
+            if (payload.substring(0, 10).toLowerCase() === 'showexrate') {
                 getExRate(sender);
             } else if (payload.substring(0, 5).toLowerCase() === 'about') {
                 sendTextMessage(sender, 'This is myBot written for MEAN Workshop');
@@ -200,33 +196,7 @@ function getBears(callback){
     });
 }
 
-// --------------------- Setting up Web View -----------------------------
-
-app.get('/weather', function(req, res) {
-    res.render(path.join(__dirname + '/app/index.html'));
-});
-
-// --------------------- Setting up DAILY NEWS -----------------------------
-function getNews(sender){
-    request
-        .get('http://newsapi.org/v1/articles?source=cnn&apiKey=3e22f2fcc1344975ae2b2e69379e2a6e')
-        .set('Content-Type', 'application/json')
-        .accept('application/json')
-        .end(function(err, res) {
-            if (err) {
-                console.log('* Error * ');
-            } else {
-                var newsDetail = 'CNN:\n';
-                var news = res.body.articles;
-
-                // Loop News Articles
-                for (var i = 1; i < news.length ; i ++) {
-                    newsDetail += i + '. ' + news[i].title.substring(0, 20) + '..\n';
-                }
-                sendTextMessage(sender, newsDetail);
-            }
-        });
-}
+// --------------------- Setting up AP CALLS -----------------------------
 
 function getExRate(sender){
     request
@@ -246,26 +216,3 @@ function getExRate(sender){
         });
 }
 
-function getCountryInfo(sender){
-    request
-        .get('http://travelbriefing.org/Myanmar?format=json')
-        .set('Content-Type', 'application/json')
-        .accept('application/json')
-        .end(function(err, res) {
-            if (err) {
-                console.log('* Error * ');
-            } else {
-                var info = JSON.parse(res.text);
-
-                var fullname = info.names.full + ':\n';
-                var language = 'Language: ' + info.language[0].language + '\n';
-                var electricity = 'Electricity: ' + info.electricity.voltage + 'V AC\n';
-                var telephone = 'Intl. Ph. Prefix: ' + info.telephone.calling_code + '\n';
-                var police = 'Police Ph: ' + info.telephone.police + '\n\n';
-                var advise = 'Advice:\n' + info.advise.UA.advise + '!\n';
-
-                sendTextMessage(sender, fullname + language + electricity + telephone + police);
-                sendTextMessage(sender, advise);
-            }
-        });
-}
