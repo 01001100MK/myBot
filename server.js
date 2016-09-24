@@ -74,13 +74,15 @@ app.post('/webhook', function(req, res) {
             } else if (text.substring(0, 4).toLowerCase() === 'save') {
                 var contactName = text.substring(5, text.lastIndexOf(' '));
                 var contactNumber = text.substring(text.lastIndexOf(' ') + 1, text.length);
-                if (name && number)
+                if (contactName)
                     createContact({
                         name: contactName,
                         mobile1: contactNumber
                     }, function(err) {
                         if (!err)
                             sendTextMessage(sender, 'Contact Saved!');
+                        else
+                            sendTextMessage(sender, 'Error!')
                     });
             } else if (text.substring(0, 4).toLowerCase() === 'find') {
                 var contactName = text.substring(5, text.length);
