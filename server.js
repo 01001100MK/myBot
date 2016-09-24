@@ -91,15 +91,15 @@ app.post('/webhook', function(req, res) {
                         name: contactName
                     }, function(err, contact) {
                         if (!err)
-                            sendTextMessage(sender, contact.toString());
+                            sendTextMessage(sender, contact);
                     });
                 }
-            } else if (text.substring(0, 4).toLowerCase() === 'delete') {
+            } else if (text.substring(0, 6).toLowerCase() === 'delete') {
                 var contactName = text.substring(5, text.length);
                 if (contactName) {
                     deleteContact({
                         name: contactName
-                    }, function(err) {
+                    }, function(!err) {
                         sendTextMessage(sender, "Contact Deleted!");
                     });
                 }
@@ -208,6 +208,7 @@ mongoose.connect("mongodb://light:love@ds021346.mlab.com:21346/myai");
 function createContact(obj, callback) {
     var contact = new Contact(); // create a new instance of the Contact model
     contact.name = obj.name;
+    contact.mobile1 = obj.mobile1;
     contact.save(function(err) {
         callback(err);
     });
@@ -217,11 +218,10 @@ function createContact(obj, callback) {
 function findContact(obj, callback) {
     Contact.findOne({
         name: obj.name
-    }).exec(function(err, contact) {
+    }, function(err, contact) {
         if (err) {
-            console.log(err);
+            callback(err);
         } else {
-            console.log(contact);
             callback(contact);
         }
     });
