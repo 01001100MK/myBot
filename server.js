@@ -16,7 +16,9 @@ var pageToken = 'EAACcZCe2TVjsBAPI3csZBAilLY0ZBiw8ZC2xZCgYPcgIwXeDvepigm4sgXkZB4
 var verifyToken = 'my_secret_token';
 
 // configure body parser
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
 app.engine('html', require('ejs').renderFile);
@@ -55,7 +57,10 @@ app.post('/webhook', function(req, res) {
             if (payload.substring(0, 10).toLowerCase() === 'showexrate') {
                 getExRate(sender);
             } else if (payload.substring(0, 5).toLowerCase() === 'about') {
-                sendTextMessage(sender, 'This is myBot written for MEAN Workshop');
+                sendTextMessage(sender, 'I am badass Alfred!');
+            } else if (payload.substring(0, 4).toLowerCase() === 'help') {
+                sendTextMessage(sender, "Save *name_without_space* *number*, Find *name_without_space*, " +
+                    "Delete *name_without_space*");
             }
         }
 
@@ -66,13 +71,38 @@ app.post('/webhook', function(req, res) {
 
             if (text.substring(0, 4).toLowerCase() === 'help' || text.substring(0, 4).toLowerCase() === 'menu') {
                 showMenu(sender, 'Help menu');
-            } else if (text.substring(0, 4).toLowerCase() === 'add '){
-                var bear_name = text.substring(4, 20);
-                if (bear_name) createBear({name: bear_name}, function(err){
-                    if (!err) sendTextMessage(sender, 'Bear Added!');
-                });
+            } else if (text.substring(0, 4).toLowerCase() === 'save') {
+                var contactName = text.substring(5, text.lastIndexOf(' '));
+                var contactNumber = text.substring(text.lastIndexOf(' ') + 1, text.length);
+                if (name && number)
+                    createContact({
+                        name: contactName,
+                        mobile1: contactNumber
+                    }, function(err) {
+                        if (!err)
+                            sendTextMessage(sender, 'Contact Saved!');
+                    });
+            } else if (text.substring(0, 4).toLowerCase() === 'find') {
+                var contactName = text.substring(5, text.length);
+                if (contactName) {
+                    findContact({
+                        name: contactName
+                    }, function(err, contact) {
+                        if (!err)
+                            sendTextMessage(sender, contact.toString());
+                    });
+                }
+            } else if (text.substring(0, 4).toLowerCase() === 'delete') {
+                var contactName = text.substring(5, text.length);
+                if (contactName) {
+                    deleteContact({
+                        name: contactName
+                    }, function(err) {
+                        sendTextMessage(sender, "Contact Deleted!");
+                    });
+                }
             } else {
-                sendTextMessage(sender, 'This is myBot, type MENU for help, ADD <name> to add');
+                sendTextMessage(sender, "This is Alfred! Don't mess up with me!");
             }
         }
     });
@@ -81,9 +111,9 @@ app.post('/webhook', function(req, res) {
 
 //--- To send plain text messages
 function sendTextMessage(sender, textMsg) {
-   sendMessage(sender, {
-         text: textMsg
-   });
+    sendMessage(sender, {
+        text: textMsg
+    });
 }
 
 //--- To send message bubbles (structured messages)
@@ -94,17 +124,17 @@ function showMenu(sender, messageDetails) {
             payload: {
                 template_type: 'generic',
                 elements: [{
-                    title: 'myBot for Messenger',
+                    title: 'That is I do!',
                     subtitle: messageDetails,
-                    image_url: 'http://i446.photobucket.com/albums/qq190/naytunthein/iLedger_red_zps6opcv9lt.png',
+                    image_url: 'http://media.comicbook.com/2015/12/alfredjeremyironsbatmanvsuperman-164095.png',
                     buttons: [{
                         type: 'postback',
-                        title: 'Country Info.',
-                        payload: 'showcountryinfo'
+                        title: 'About',
+                        payload: 'about'
                     }, {
                         type: 'postback',
-                        title: 'Latest News',
-                        payload: 'shownews'
+                        title: 'Help',
+                        payload: 'help'
                     }, {
                         type: 'postback',
                         title: 'Exchange Rate',
@@ -152,7 +182,9 @@ app.post('/token', function(req, res) {
 app.get('/token', function(req, res) {
     if (req.body.verifyToken === verifyToken) {
         console.log(verifyToken);
-        return res.send({ token: pageToken });
+        return res.send({
+            token: pageToken
+        });
     }
     console.log('error in token');
     res.sendStatus(403);
@@ -164,41 +196,45 @@ console.log('\n========= myBot listening on port ' + port + ' =========\n');
 
 
 // --------------------- Setting up Database -----------------------------
-var mongoose   	= require('mongoose');
-var Bear     	= require('./app/models/bear');
+var mongoose = require('mongoose');
+var Contact = require('./app/models/contact');
 
 // Connect to MongoDB using Mongoose driver
-mongoose.connect('mongodb://naytunAdmin:Password99@ds023654.mlab.com:23654/mean');
+mongoose.connect("mongodb://light:love@ds021346.mlab.com:21346/myai");
 
-// Create a New Bear
-function createBear(obj, callback){
-    var bear = new Bear();		// create a new instance of the Bear model
-    bear.name = obj.name;
-    bear.save(function(err) {
+// Create a New Contact
+function createContact(obj, callback) {
+    var contact = new Contact(); // create a new instance of the Contact model
+    contact.name = obj.name;
+    contact.save(function(err) {
         callback(err);
     });
 }
 
-// Get All Bears
-function getBears(callback){
-    Bear.find({}).exec(function(err, bears) {
+// Get Contact by Name
+function findContact(obj, callback) {
+    Contact.findOne({
+        name: obj.name
+    }).exec(function(err, contact) {
         if (err) {
             console.log(err);
         } else {
-            var result = '';
-            // Extract each row from json object
-            bears.forEach(function(bear){
-                result += '- ' + bear.name + "\n";
-            });
-            console.log(result);
-            callback(result);
+            console.log(contact);
+            callback(contact);
         }
     });
 }
 
+function deleteContact(obj, callback) {
+    Contact.remove({
+        name: obj.name
+    }, function(err) {
+        callback(err);
+    });
+}
 // --------------------- Setting up AP CALLS -----------------------------
 
-function getExRate(sender){
+function getExRate(sender) {
     request
         .get('http://openexchangerates.org/api/latest.json?app_id=440b42f70b964695a9d820bb96398caa')
         .set('Content-Type', 'application/json')
