@@ -91,7 +91,7 @@ app.post('/webhook', function(req, res) {
                         name: contactName
                     }, function(err, contact) {
                         if (!err)
-                            sendTextMessage(sender, contact);
+                            sendTextMessage(sender, "Contact Found!");
                     });
                 }
             } else if (text.substring(0, 6).toLowerCase() === 'delete') {
@@ -215,17 +215,17 @@ function createContact(obj, callback) {
 }
 
 // Get Contact by Name
-function findContact(obj, callback) {
-    Contact.findOne({
-        name: obj.name
-    }, function(err, contact) {
-        if (err) {
-            callback(err);
-        } else {
-            callback(contact);
-        }
-    });
-}
+// function findContact(obj, callback) {
+//     Contact.findOne({
+//         name: obj.name
+//     }, function(err, contact) {
+//         if (err) {
+//             callback(err);
+//         } else {
+//             callback(contact);
+//         }
+//     });
+// }
 
 function deleteContact(obj, callback) {
     Contact.remove({
