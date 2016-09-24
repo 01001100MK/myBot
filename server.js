@@ -99,8 +99,10 @@ app.post('/webhook', function(req, res) {
                 if (contactName) {
                     deleteContact({
                         name: contactName
-                    }, function(!err) {
-                        sendTextMessage(sender, "Contact Deleted!");
+                    }, function(err) {
+                        if (!err) {
+                          sendTextMessage(sender, "Contact Deleted!");
+                        }
                     });
                 }
             } else {
