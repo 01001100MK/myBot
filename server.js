@@ -12,7 +12,7 @@ var path = require('path');
 // Global Variables
 var app = express();
 var port = process.env.PORT || 8080;
-var pageToken = 'EAAZARCeCmajcBALOsTO4mOPAcruNQQZAzRNR9xE8cNOqe0pHe6qn5kkpLfhbXCIEkiiJ7XY71JpyhZABvoqlPdxkw9qX5qHA2OlXmDAZBk2CfvW6OpEtxX3pZAQ887c83DpdoZCy6QBVYBziEdZARYyvjSjfSLFeY8oqIao3dBYPQZDZD';
+var pageToken = 'EAACcZCe2TVjsBAPI3csZBAilLY0ZBiw8ZC2xZCgYPcgIwXeDvepigm4sgXkZB4GbM7887cyXf4yWKrrz09dGpEfbYTNcYB1B7kUZBBnP06g0jaXbdRwyTmVOID7Po8eOZB3fkl84FV4InaEfAGLK73cncZCZBK4Fn8GMo1fyQDRE3e9QZDZD';
 var verifyToken = 'my_secret_token';
 
 // configure body parser
@@ -35,7 +35,7 @@ app.get('/', function(req, res) {
     res.send('Success! This is Bot for Facebook Messenger.');
 });
 
-// --- Initiate Messenger Bot 
+// --- Initiate Messenger Bot
 app.post('/webhook', function(req, res) {
     var messagingEvents = req.body.entry[0].messaging;
     var sender = messagingEvents[0].sender.id;
@@ -49,7 +49,7 @@ app.post('/webhook', function(req, res) {
         // PAYLOAD: Data from structured page
         if (event.postback) {
             // Start extract string from index one to skip quote (") character
-            payload = JSON.stringify(event.postback.payload).trim().substring(1, 60); 
+            payload = JSON.stringify(event.postback.payload).trim().substring(1, 60);
             console.log('Payload: ' + payload);
 
             if (payload.substring(0, 10).toLowerCase() === 'showexrate') {
@@ -168,12 +168,12 @@ var mongoose   	= require('mongoose');
 var Bear     	= require('./app/models/bear');
 
 // Connect to MongoDB using Mongoose driver
-mongoose.connect('mongodb://naytunAdmin:Password99@ds023654.mlab.com:23654/mean'); 
+mongoose.connect('mongodb://naytunAdmin:Password99@ds023654.mlab.com:23654/mean');
 
 // Create a New Bear
-function createBear(obj, callback){		
+function createBear(obj, callback){
     var bear = new Bear();		// create a new instance of the Bear model
-    bear.name = obj.name;       
+    bear.name = obj.name;
     bear.save(function(err) {
         callback(err);
     });
@@ -215,4 +215,3 @@ function getExRate(sender){
             }
         });
 }
-
