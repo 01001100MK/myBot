@@ -101,9 +101,14 @@ app.post('/webhook', function(req, res) {
                         name: contactName
                     }, function(err) {
                         if (!err) {
-                          sendTextMessage(sender, "Contact Deleted!");
+                            sendTextMessage(sender, "Contact Deleted!");
                         }
                     });
+                }
+            } else if (text.charAt(0) === '?') {
+                var word = text.substring(1, text.length);
+                if (word) {
+                    getDictionary(sender, word);
                 }
             } else {
                 sendTextMessage(sender, "This is Alfred! Don't mess up with me!");
@@ -252,6 +257,46 @@ function getExRate(sender) {
 
                 exgRate = currencies.rates.MMK;
                 sendTextMessage(sender, 'USD vs. MMK: ' + exgRate.toString());
+            }
+        });
+}
+
+function getDictionary(sender, word) {
+    request
+        .get("http://api.pearson.com/v2/dictionaries/lasde/entries?headword=" + word + "&limit=3")
+        .set('Content-Type', 'application/json')
+        .accept('application/json')
+        .end(function(err, res) {
+            if (err) {
+                console.log('* Error *');
+            } else {
+                var dict = res.body;
+                for (var i = 0; i < dict.count; i++) {
+                    var headword = dict.results[i].headword;
+                    var part_of_speech = dict.results[i].part_of_speech;
+                    try {
+                        var ipa = dict.results[i].pronunciations[0].ipa;
+                    } catch (err) {}
+
+                    var definition = dict.results[i].senses[0].definition[0];
+                    try {
+                        var example = dict.results[i].senses[0].gramatical_examples[0].examples[0].text;
+                    } catch (err) {}
+                    try {
+                        var example2 = dict.results[i].senses[0].collocation_examples[0].example.text;
+                    } catch (err) {}
+                    try {
+                        var example3 = dict.results[i].senses[0].examples[0].text;
+                    } catch (err) {}
+
+                    sendTextMessage(sender, "word: " + headword);
+                    sendTextMessage(sender, "part of speech: " + part_of_speech);
+                    sendTextMessage(sender, "ipa: " + ipa);
+                    sendTextMessage(sender, "def: " + definition);
+                    sendTextMessage(sender, example);
+                    sendTextMessage(sender, example2);
+                    sendTextMessage(sender, example3);
+                }
             }
         });
 }
