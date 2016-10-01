@@ -12,7 +12,7 @@ var path = require('path');
 // Global Variables
 var app = express();
 var port = process.env.PORT || 8080;
-var pageToken = 'EAACcZCe2TVjsBAPI3csZBAilLY0ZBiw8ZC2xZCgYPcgIwXeDvepigm4sgXkZB4GbM7887cyXf4yWKrrz09dGpEfbYTNcYB1B7kUZBBnP06g0jaXbdRwyTmVOID7Po8eOZB3fkl84FV4InaEfAGLK73cncZCZBK4Fn8GMo1fyQDRE3e9QZDZD';
+var pageToken = 'EAACcZCe2TVjsBANPmkMgDlT2FNZBGZB5cG5BexQ6SDLqkvYQxm5sQNcU0O5kmF9LZBkGVztZCazMQnAuMdZBZAAqRgBc7ZAUhPqgVUPkB82Rys1JMFufx1HfjsdNCQX7XPKZA2UVZBT9LIZA5wdtyooaokssOjPwytIR4jrXx78yEETMAZDZD';
 var verifyToken = 'my_secret_token';
 
 // configure body parser
