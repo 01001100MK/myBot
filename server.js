@@ -322,7 +322,7 @@ function searchMovie(sender, movie) {
                 sendTextMessage(sender, movie.vote_average);
                 sendTextMessage(sender, movie.id);
 
-                if (movie.overview > 320) {
+                if (movie.overview.length > 320) {
                     var overview = movie.overview.substring(0, 320);
                     sendTextMessage(sender, overview);
 
