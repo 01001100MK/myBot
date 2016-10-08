@@ -8,7 +8,7 @@ var express = require('express');
 var request = require('superagent');
 var bodyParser = require('body-parser');
 var path = require('path');
-
+var movieApi = require("./app/controllers/database");
 // Global Variables
 var app = express();
 var port = process.env.PORT || 8080;
@@ -109,6 +109,11 @@ app.post('/webhook', function(req, res) {
                 var word = text.substring(1, text.length);
                 if (word) {
                     getDictionary(sender, word);
+                }
+            } else if (text.substring(0, 2).toLowerCase() === 'mv') {
+                var movie = text.substring(3, text.length);
+                if (movie) {
+                    movieApi.searchMovie(sender, movie);
                 }
             } else {
                 sendTextMessage(sender, "This is Alfred! Don't mess up with me!");
