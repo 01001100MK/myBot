@@ -306,7 +306,7 @@ function getDictionary(sender, word) {
         });
 }
 
-searchMovie = function(sender, movie) {
+function searchMovie = function(sender, movie) {
     request
         .get("https://api.themoviedb.org/3/search/movie?api_key=81d7640dffed48055b1803be5b452893&query=" + movie)
         .set('Content-Type', 'application/json')
