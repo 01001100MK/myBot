@@ -318,10 +318,22 @@ function searchMovie(sender, movie) {
                 var movie = res.body.results[0];
 
                 sendTextMessage(sender, movie.title);
-                sendTextMessage(sender, movie.overview);
                 sendTextMessage(sender, movie.release_date);
                 sendTextMessage(sender, movie.vote_average);
                 sendTextMessage(sender, movie.id);
+
+                if (movie.overview > 320) {
+                    var overview = movie.overview.substring(0, 320);
+                    sendTextMessage(sender, overview);
+
+                    var overview2 = movie.overview.substring(320, 640);
+                    sendTextMessage(sender, overview2);
+
+                    var overview3 = movie.overview.substring(640, 960);
+                    sendTextMessage(sender, overview3);
+                } else {
+                    sendTextMessage(sender, movie.overview);
+                }
             }
         });
 };
