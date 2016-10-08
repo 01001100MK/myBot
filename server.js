@@ -8,7 +8,7 @@ var express = require('express');
 var request = require('superagent');
 var bodyParser = require('body-parser');
 var path = require('path');
-var movieApi = require("./app/controllers/database");
+var movieApi = require("./app/controllers/movieApi");
 // Global Variables
 var app = express();
 var port = process.env.PORT || 8080;
